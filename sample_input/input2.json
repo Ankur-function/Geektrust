@@ -1,0 +1,28 @@
+{
+    "START_SUBSCRIPTION" : "07-19-2022",
+    "ADD_SUBSCRIPTION":[
+        {
+            "type" : "MUSIC" ,
+            "cat" : "PERSONAL"
+        },
+        {
+            "type" : "VIDEO" ,
+            "cat" : "PREMIUM"
+        },
+        {
+            "type" : "PODCAST" ,
+            "cat" : "FREE"
+        }
+    ],
+    "ADD_TOPUP" : [
+        {
+            "numberOfDevice" : "FOUR_DEVICE",
+            "months" : 3
+        },
+        {
+            "numberOfDevice" : "TEN_DEVICE",
+            "months" : 3
+        }
+    ],
+    "PRINT_RENEWAL_DETAILS" : true
+}
