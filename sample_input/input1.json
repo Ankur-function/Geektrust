@@ -1,22 +1,22 @@
 {
     "START_SUBSCRIPTION" : "20-02-2022",
-    "ADD_SUBSCRIPTION":[
+    "Access":[
         {
-            "type" : "MUSIC" ,
-            "cat" : "PERSONAL"
+            "a" : "Music" ,
+            "b" : "Personal"
         },
         {
-            "type" : "VIDEO" ,
-            "cat" : "PREMIUM"
+            "a" : "Video" ,
+            "b" : "Premium"
         },
         {
-            "type" : "PODCAST" ,
-            "cat" : "FREE"
+            "a" : "Podcast" ,
+            "b" : "FREE"
         }
     ],
     "ADD_TOPUP" : [
         {
-            "device_plan" : "FOUR_DEVICE",
+            "device_plan" : "Four",
             "months" : 3
         }
     ],

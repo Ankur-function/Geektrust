@@ -1,115 +1,154 @@
 const fs = require("fs");
 
-const filename = process.argv[2];
+const files = process.argv[2];
 
 const getData = () => {
   try {
     return JSON.parse(
       fs
-        .readFileSync(filename, "utf8", (err, data) => {
-          /*if (err) throw err
-            var inputLines = data.toString().split("\n")
-            // Add your code here to process input commands
-            */
+        .readFileSync(files, "utf8", (err, data) => {
         })
         .toString()
     );
-  } catch (e) {
+  } catch (err) {
     return {};
   }
 };
 
-//plan as per the problem **** 1 month is not define number of days so consider 28 days as standerd ***
-const planDetails = {
-  MUSIC: {
-    PERSONAL: 100,
-    PREMIUM: 250,
-    FREE_MONTH: 28,
-    PERSONAL_MONTH: 28,
-    PREMIUM_MONTH: 84,
+
+
+
+const plan = {
+  MusicDetails: {
+    Personal: 200,
+    Premium: 300,
+    Free_Month: 28,
+    Personal_Month: 28,
+    Premium_Month: 84,
   },
-  VIDEO: {
-    PERSONAL: 200,
-    PREMIUM: 500,
-    FREE_MONTH: 28,
-    PERSONAL_MONTH: 28,
-    PREMIUM_MONTH: 84,
+
+
+  VideoDetails: {
+    Personal: 300,
+    Premium: 600,
+    Free_Month: 28,
+    Personal_Month: 28,
+    Premium_Month: 84,
   },
-  PODCAST: {
-    PERSONAL: 100,
-    PREMIUM: 300,
-    FREE_MONTH: 28,
-    PERSONAL_MONTH: 28,
-    PREMIUM_MONTH: 84,
+
+
+  PodcastDetails: {
+    Personal: 200,
+    Premium: 400,
+    Free_Month: 28,
+    Personal_Month: 28,
+    Premium_Month: 84,
   },
-  FOUR_DEVICE: {
-    PER_MONTH: 50,
+
+
+  Four: {
+    Per_Month: 40,
   },
-  TEN_DEVICE: {
-    PER_MONTH: 100,
+
+  Ten: {
+    Per_Month: 100,
   },
+
 };
-const fethSubscription = () => {
+
+
+const Access = () => {
   const data = getData();
+
+
   if (data && data.PRINT_RENEWAL_DETAILS) {
-    const todayDate = new Date();
-    const tempDate = data.START_SUBSCRIPTION.split("-");
-    const subDate = new Date(+tempDate[2], +tempDate[1] - 1, +tempDate[0]);
+
+    const today = new Date();
+    const temp = data.START_SUBSCRIPTION.split("-");
+    const subDate = new Date(+temp[2], +temp[1] - 1, +temp[0]);
     console.log(subDate);
+
     if (
-      (+tempDate[0] <= 31 ||
-        +tempDate[1] - 1 <= 11 ||
-        +tempDate[2] <= todayDate.getFullYear()) &&
-      subDate.getTime() <= todayDate.getTime()
-    ) {
-      //check for multiple add topups if present throw error message
+      (+temp[0] <= 31 ||
+        +temp[1] - 1 <= 11 ||
+        +temp[2] <= today.getFullYear()) &&
+      subDate.getTime() <= today.getTime()
+    ) 
+    {
+      
       if (data.ADD_TOPUP.length <= 1) {
-        let subData = [];
-        let printData = [];
-        let totalAmount = 0;
-        let foundDup = false;
+
+        let sub = [];
+        let print = [];
+        let total = 0;
+        let Dup = false;
+
+
         for (const val of data.ADD_SUBSCRIPTION) {
-          if (!subData.includes(val.type)) {
-            subData.push(val.type);
-            printData.push(getSubDetails(val.type, val.cat, subDate));
-            totalAmount +=
-              val.cat === "FREE" ? 0 : planDetails[val.type][val.cat];
-          } else {
-            foundDup = true;
+
+
+          if (!sub.includes(val.type)) {
+            sub.push(val.type);
+            print.push(getSubDetails(val.type, val.cat, sub));
+            total +=
+              val.cat === "FREE" ? 0 : plan[val.type][val.cat];
+          } 
+          else {
+            Dup = true;
             break;
           }
+
         }
-        if (foundDup) {
-          return "ADD_SUBSCRIPTION_FAILED DUPLICATE_CATEGORY";
-        } else {
+
+
+        if (Dup) {
+          return "SUBSCRIPTION  FAILED";
+        } 
+        
+        else {
           data.ADD_TOPUP[0]
-            ? (totalAmount +=
-                planDetails[data.ADD_TOPUP[0].device_plan].PER_MONTH *
+            ? (total +=
+                plan[data.ADD_TOPUP[0].device_plan].PER_MONTH *
                 data.ADD_TOPUP[0].months)
             : 0;
-          printData.push(`RENEWAL_AMOUNT ${totalAmount}`);
-          return printData;
+
+          print.push(`RENEWAL_AMOUNT ${total}`);
+          return print;
+
         }
-      } else {
-        return "ADD_TOPUP_FAILED DUPLICATE_TOPUP";
+
+
+      } 
+
+      else {
+        return "ADD TOPUP FAILED";
       }
-    } else {
-      return "INVALID_DATE";
+    } 
+
+    else {
+      return "INVALID DATE";
     }
-  } else {
-    return "SUBSCRIPTIONS_NOT_FOUND";
   }
+
+   else {
+    return "NOT FOUND";
+  }
+
 };
 
-const getSubDetails = (type, catType, subDate) => {
-  let remDate = new Date(
+const getSubDetails = (a, b, subDate) => {
+
+  let remTime = new Date(
     subDate.getFullYear(),
     subDate.getMonth(),
-    subDate.getDate() + planDetails[type][`${catType}_MONTH`]
+    subDate.getDate() + plan[a][`${b}_MONTH`]
   );
-  return `RENEWAL_REMINDER ${type} ${remDate.getDate()}-${
-    remDate.getMonth() + 1
-  }-${remDate.getFullYear()}`;
+
+  return `RENEWAL_REMINDER ${a} ${remTime.getDate()}-${
+    remTime.getMonth() + 1
+  }-${remTime.getFullYear()}`;
+
 };
 
-console.log(fethSubscription());
+
+console.log(Access());

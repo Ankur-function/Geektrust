@@ -1,26 +1,26 @@
 {
     "START_SUBSCRIPTION" : "07-19-2022",
-    "ADD_SUBSCRIPTION":[
+    "Access":[
         {
-            "type" : "MUSIC" ,
-            "cat" : "PERSONAL"
+            "a" : "Music" ,
+            "b" : "Personal"
         },
         {
-            "type" : "VIDEO" ,
-            "cat" : "PREMIUM"
+            "a" : "Video" ,
+            "b" : "Premium"
         },
         {
-            "type" : "PODCAST" ,
-            "cat" : "FREE"
+            "a" : "Podcast" ,
+            "b" : "Free"
         }
     ],
     "ADD_TOPUP" : [
         {
-            "numberOfDevice" : "FOUR_DEVICE",
+            "numberOfDevice" : "Four",
             "months" : 3
         },
         {
-            "numberOfDevice" : "TEN_DEVICE",
+            "numberOfDevice" : "Ten",
             "months" : 3
         }
     ],
